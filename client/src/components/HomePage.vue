@@ -47,6 +47,9 @@ name: 'CarComponent',
     async deleteCar(id) {
       await CarService.deleteCar(id);
       this.cars = await CarService.getCars();
+    },
+    async viewCar(id) {
+      await CarService.viewCar(id);
     }
   }
 };

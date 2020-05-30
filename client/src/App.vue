@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <CarComponent />
+    <HomePage/>
   </div>
 </template>
 
 <script>
-import CarComponent from './components/CarComponent.vue'
+import HomePage from './components/HomePage.vue'
 
 export default {
   name: 'App',
   components: {
-    CarComponent
+    HomePage
   }
 }
 </script>
