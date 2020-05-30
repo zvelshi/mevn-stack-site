@@ -13,13 +13,12 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const cars = await loadCarsCollection();
     await cars.insertOne({
-        make: req.body.make,
-        model: req.body.model,
-        createdAt: new Date()
+      make: req.body.make,
+      model: req.body.model,
+      createdAt: new Date()
     });
-
-    res.status(201).send;
-})
+    res.status(201).send();
+});
 
 // Delete Car
 router.delete('/:id', async (req, res) => {
