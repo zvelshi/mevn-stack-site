@@ -21,7 +21,7 @@ class CarService {
             
         });
     }
-
+    
     // Create Car
     static insertCar(make, model){
         return axios.post(url, {make, model});
@@ -31,6 +31,24 @@ class CarService {
     static deleteCar(id){
         return axios.delete(`${url}${id}`);
     }
+
+    // Grab A Car by an ID
+
+    /* -- DOESN'T WORK, NEEDS TO BE FIXED, SEE NOTES --
+    static getCarById(id){
+        return new Promise ((resolve,reject) => {
+            axios.get(`${url}${id}`).then((res) => {
+                resolve(
+                    console.log(res.data)
+                );
+            })
+            .catch((err)=> {
+                reject(err);
+            })
+            
+        });
+    }
+    */
 }
 
 export default CarService;

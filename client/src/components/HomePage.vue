@@ -1,18 +1,11 @@
 <template>
   <div class="container">
     <h1>Latest Car Listings</h1>
-    <div class="create-cars">
-        <label for="create-car">Add your car: </label>
-        <input type="text" id="create-car" v-model="make" placeholder="Toyota">
-        <input type="text" id="create-car" v-model="model" placeholder="Camry">
-        <button v-on:click="createCar">Post!</button>
-    </div>
     <div class= "search-brands">
-      <label for="search-brands">Brand: </label>
-        <select id="select">
-          <option value="default" disabled selected>Select a Brand</option>
+      <label for="search-brands">Filter Listings by Brand: </label>
+        <select id="select" v-on:change="byBrand()">
+          <option value="default" selected>All</option>
         </select>
-        <!--button which takes you to a page with the selected brand as the "filter"-->
     </div>
     <hr>
     <p class="error" v-if="error">{{ error }}</p>
@@ -21,6 +14,7 @@
         <p class="created-at">{{ `${car.createdAt.getDate()}/${car.createdAt.getMonth()+1}/${car.createdAt.getFullYear()}` }}</p>
         <p class="car-post">{{ car.make }} {{ car.model }}</p>
         <button class="delete" v-on:click="deleteCar(car._id)">Delete</button>
+        <router-link :to="{ name: 'view', params: { id: car._id } }">Go!</router-link>
       </div>
     </div>
   </div>
@@ -30,23 +24,20 @@
 import CarService from '../CarService';
 
 export default {
-name: 'CarComponent',
+name: 'HomePage',
   data() {
     return {
       cars: [],
       error: '',
       make: '',
       model: '',
-      brands: [],
-      recognizedBrands: ["Abarth","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Bugatti","Cadillac","Chevrolet","Chrysler","Citroën","Dacia","Daewoo","Daihatsu","Dodge","Donkervoort","DS","Ferrari","Fiat","Fisker","Ford","Honda","Hummer","Hyundai","Infiniti","Iveco","Jaguar","Jeep","Kia","KTM","Lada","Lamborghini","Lancia","Land Rover","Landwind","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Morgan","Nissan","Opel","Peugeot","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo"]
+      brands: []
     }
   },
   async created() {
     try {
       this.cars = await CarService.getCars();
-      
-      let data = await CarService.getCars();
-      this.brands = data.map(car => car.make);
+      this.brands = this.cars.map(car => car.make);
     } catch (err) {
       this.error = err.message;
     }
@@ -56,26 +47,24 @@ name: 'CarComponent',
     for (let i = 0; i < brands.length; i++){
       let option = document.createElement("OPTION"), txt = document.createTextNode(brands[i]);
       option.appendChild(txt),
-      option.setAttribute("vaue", brands[i]);
+      option.setAttribute("value", brands[i]);
       select.insertBefore(option, select.lastChild);
     }
   },
   methods: {
-    async createCar(){
-      let x = 0;
-      this.recognizedBrands.forEach(brand => {
-        if (this.make.toUpperCase() === brand.toUpperCase())
-          x++;
-        });
-      if (x !== 1) this.error = new Error(this.make + " is not valid brand.")
-      else {
-        await CarService.insertCar(this.make, this.model);
-        this.cars = await CarService.getCars();
-      }
-    },
     async deleteCar(id) {
       await CarService.deleteCar(id);
       this.cars = await CarService.getCars();
+    },
+    async byBrand(){
+      const select = document.getElementById("select");
+      const make = select.options[select.selectedIndex].value;
+      if (make === "default")
+        this.cars = await CarService.getCars()
+      else {
+        let cars = await CarService.getCars();
+        this.cars = cars.filter(car => car.make === make);
+      }
     }
   }
 };
