@@ -3,8 +3,8 @@
     <h1>Latest Car Listings</h1>
     <div class="create-cars">
         <label for="create-car">Add your car: </label>
-        <input type="text" id="create-car" v-model="make" placeholder="Make">
-        <input type="text" id="create-car" v-model="model" placeholder="Model">
+        <input type="text" id="create-car" v-model="make" placeholder="Toyota">
+        <input type="text" id="create-car" v-model="model" placeholder="Camry">
         <button v-on:click="createCar">Post!</button>
     </div>
     <div class= "search-brands">
@@ -38,35 +38,40 @@ name: 'CarComponent',
       make: '',
       model: '',
       brands: [],
+      recognizedBrands: ["Abarth","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Bugatti","Cadillac","Chevrolet","Chrysler","Citroën","Dacia","Daewoo","Daihatsu","Dodge","Donkervoort","DS","Ferrari","Fiat","Fisker","Ford","Honda","Hummer","Hyundai","Infiniti","Iveco","Jaguar","Jeep","Kia","KTM","Lada","Lamborghini","Lancia","Land Rover","Landwind","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Morgan","Nissan","Opel","Peugeot","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo"]
     }
   },
   async created() {
     try {
       this.cars = await CarService.getCars();
+      
+      let data = await CarService.getCars();
+      this.brands = data.map(car => car.make);
     } catch (err) {
       this.error = err.message;
     }
-
-    try {
-        let data = await CarService.getCars();
-        this.brands = data.map(car => car.make);
-      } catch (err) {
-        this.error = err.message;
-      }
-
-      const select = document.getElementById('select');
-      const brands = this.brands.sort((a,b) => a > b ? 1 : -1);
-      for (let i = 0; i < brands.length; i++){
-        let option = document.createElement("OPTION"), txt = document.createTextNode(brands[i]);
-        option.appendChild(txt);
-        option.setAttribute("vaue", brands[i]);
-        select.insertBefore(option, select.lastChild);
-      }
+    
+    const select = document.getElementById('select');
+    const brands = [...new Set(this.brands.sort((a,b) => a > b ? 1 : -1))];
+    for (let i = 0; i < brands.length; i++){
+      let option = document.createElement("OPTION"), txt = document.createTextNode(brands[i]);
+      option.appendChild(txt),
+      option.setAttribute("vaue", brands[i]);
+      select.insertBefore(option, select.lastChild);
+    }
   },
   methods: {
-    async createCar() {
-      await CarService.insertCar(this.make, this.model);
-      this.cars = await CarService.getCars();
+    async createCar(){
+      let x = 0;
+      this.recognizedBrands.forEach(brand => {
+        if (this.make.toUpperCase() === brand.toUpperCase())
+          x++;
+        });
+      if (x !== 1) this.error = new Error(this.make + " is not valid brand.")
+      else {
+        await CarService.insertCar(this.make, this.model);
+        this.cars = await CarService.getCars();
+      }
     },
     async deleteCar(id) {
       await CarService.deleteCar(id);
