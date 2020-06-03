@@ -7,6 +7,13 @@
         <input type="text" id="create-car" v-model="model" placeholder="Model">
         <button v-on:click="createCar">Post!</button>
     </div>
+    <div class= "search-brands">
+      <label for="search-brands">Brand: </label>
+        <select id="select">
+          <option value="default" disabled selected>Select a Brand</option>
+        </select>
+        <!--button which takes you to a page with the selected brand as the "filter"-->
+    </div>
     <hr>
     <p class="error" v-if="error">{{ error }}</p>
     <div class="cars-container">
@@ -29,7 +36,8 @@ name: 'CarComponent',
       cars: [],
       error: '',
       make: '',
-      model: ''
+      model: '',
+      brands: [],
     }
   },
   async created() {
@@ -38,6 +46,22 @@ name: 'CarComponent',
     } catch (err) {
       this.error = err.message;
     }
+
+    try {
+        let data = await CarService.getCars();
+        this.brands = data.map(car => car.make);
+      } catch (err) {
+        this.error = err.message;
+      }
+
+      const select = document.getElementById('select');
+      const brands = this.brands.sort((a,b) => a > b ? 1 : -1);
+      for (let i = 0; i < brands.length; i++){
+        let option = document.createElement("OPTION"), txt = document.createTextNode(brands[i]);
+        option.appendChild(txt);
+        option.setAttribute("vaue", brands[i]);
+        select.insertBefore(option, select.lastChild);
+      }
   },
   methods: {
     async createCar() {
@@ -47,9 +71,6 @@ name: 'CarComponent',
     async deleteCar(id) {
       await CarService.deleteCar(id);
       this.cars = await CarService.getCars();
-    },
-    async viewCar(id) {
-      await CarService.viewCar(id);
     }
   }
 };
