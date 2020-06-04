@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const url = "api/cars/";
 
-class CarService {
+class CarService {    
     // Get Cars
     static getCars() {
         return new Promise ((resolve,reject) => {
@@ -32,23 +32,14 @@ class CarService {
         return axios.delete(`${url}${id}`);
     }
 
-    // Grab A Car by an ID
-
-    /* -- DOESN'T WORK, NEEDS TO BE FIXED, SEE NOTES --
-    static getCarById(id){
-        return new Promise ((resolve,reject) => {
-            axios.get(`${url}${id}`).then((res) => {
-                resolve(
-                    console.log(res.data)
-                );
-            })
-            .catch((err)=> {
-                reject(err);
-            })
-            
-        });
-    }
-    */
+    // Get By Id ---- STILL DOESN'T WORK, SERVER SIDE WORKS NOW BUT CLIENT DOESN'T. ----
+    /*static findCarById(id){
+        return axios.get(`/api/cars/${id}`, {
+            params: {
+                id: this.car
+            }
+        }).then(response => {this.car = response.data})
+    }*/
 }
 
-export default CarService;
+export default CarService; 

@@ -3,11 +3,17 @@ const mongodb = require('mongodb');
 
 const router = express.Router();
 
-// Get Car
+// Get Cars
 router.get('/', async (req, res) => {
     const cars = await loadCarsCollection();
     res.send(await cars.find({}).toArray());
   });
+
+//By Id
+router.get('/:id', async (req, res) => {
+  const cars = await loadCarsCollection();
+  res.send(await cars.find({ _id: new mongodb.ObjectID(req.params.id) }).toArray());
+});
 
 // Add Car
 router.post('/', async (req, res) => {
