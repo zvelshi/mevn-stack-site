@@ -11,6 +11,9 @@
 
       <label for="create-car">Model: </label>
       <input type="text" id="create-car" v-model="model" placeholder="Camry"> <br>
+
+      <label for="create-car">Colour: </label>
+      <input type="text" v-model="colour" placeholder="Grey"> <br>
            
       <img id="body-image" alt="[Image]" :src="`../assets/body-types/${bodytype}.png`"> <br> <br>
       <label for="body-type">Body Style: </label>
@@ -32,7 +35,7 @@
         <select id="select" v-model="mileageunit">
           <option value="default" selected disabled>Please select</option>
           <option value="km">kilometres</option>
-          <option value="m">miles</option>
+          <option value="mi">miles</option>
         </select><br>
         
       <label for="create-car">Drivetrain: </label>
@@ -52,10 +55,7 @@
         </select><br>
 
       <label for="create-car">Engine Information: </label>
-      <input type="text" v-model="engineinfo" placeholder="3.2L 4cyl"> <br>
-
-      <label for="create-car">Colour: </label>
-      <input type="text" v-model="colour" placeholder="Grey"> <br>
+      <input type="text" v-model="engineinfo" placeholder="3.2L 4cyl"> <br>      
 
       <label for="create-car">Asking Price: </label>
       <input type="number" v-model="price" placeholder="$CAD"> <br>
@@ -87,6 +87,7 @@ name: 'AddCar',
       engineinfo: '',
       colour: '',
       description: '',
+      condition:'',
       recognizedBrands: ["Abarth","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Bugatti","Cadillac","Chevrolet","Chrysler","Citroën","Dacia","Daewoo","Daihatsu","Dodge","Donkervoort","DS","Ferrari","Fiat","Fisker","Ford","Honda","Hummer","Hyundai","Infiniti","Iveco","Jaguar","Jeep","Kia","KTM","Lada","Lamborghini","Lancia","Land Rover","Landwind","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Morgan","Nissan","Opel","Peugeot","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo"]
     }
   },
@@ -107,9 +108,12 @@ name: 'AddCar',
       if (x !== 1) this.error = new Error(this.make + " is not valid brand.")
       else {
         let a = "a ";
+        let bodytype = "";
         if (this.transmission === "automatic") a = "an ";
-        this.description = "This is " + a + this.transmission + " " + this.make + " " + this.model + " from " + this.year + ". It is a " + this.drivetrain + " " + this.bodytype + " with " + this.mileage + this.mileageunit + ".";
-        await CarService.insertCar(this.year, this.make, this.model, this.bodytype, this.mileage.toLocaleString(), this.mileageunit, this.drivetrain, this.transmission, this.price.toLocaleString(), this.engineinfo, this.colour, this.description);
+        if (this.bodytype === "sports") bodytype = "sports car";
+
+        this.description = "This is " + a + this.transmission + " " + this.make + " " + this.model + " from " + this.year + ". It is a " + this.drivetrain + " " + bodytype + " with " + this.mileage + this.mileageunit + ".";
+        await CarService.insertCar(this.year, this.make, this.model, this.bodytype, this.mileage, this.mileageunit, this.drivetrain, this.transmission, this.price, this.engineinfo, this.colour, this.description, this.condition);
         this.cars = await CarService.getCars();
         document.getElementById('backtohomebutton').hidden = false;
         this.error = "Your vehicle was added successfully."
