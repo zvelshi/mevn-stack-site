@@ -341,6 +341,7 @@ name: 'HomePage',
   color: white;
   cursor: pointer;
 }
+
 .inputfield{
   width: 47%;
   padding: 10px 15px;
@@ -377,6 +378,7 @@ name: 'HomePage',
   border-radius: 3px;
   background-color: #2f6291;
   margin-top: 8px;
+  width: 75px;
 }
 
 #search:hover{

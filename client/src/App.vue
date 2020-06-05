@@ -1,12 +1,11 @@
 <template>
   <div id="app">
-    <h1>AutoDeal</h1>
+    <h1>AutoDeal!</h1>
     <div class="topnav">
       <a href="/">Home</a>
-      <a href="/">Shop New Cars</a>
+      <a href="/about">About Us</a>
       <a style="float: right;" href="/add">Sell My Car</a>
     </div>
-    
     <router-view></router-view>
   </div>
 </template>
@@ -23,13 +22,12 @@
   text-align: center;
   color: #2c3e50;
 }
-/* Add a black background color to the top navigation */
 .topnav {
   background-color: #333;
   overflow: hidden;
+  width: 100%;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -39,7 +37,6 @@
   font-size: 17px;
 }
 
-/* Change the color of links on hover */
 .topnav a:hover {
   background-color: #2f6291;
   color: white;

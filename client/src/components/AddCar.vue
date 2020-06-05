@@ -1,24 +1,17 @@
 <template>
    <div class="container">
-      <h1>List Your Car</h1>
-      <label for="create-car">Vehicle Information: </label> <br>
+      <h1>Vehicle Information</h1>
+      <input type="number" style="width:94.5%" v-model="year" class="inputfield" placeholder="Year, Ex. 2001"> <br>
 
-      <label for="create-car">Year: </label>
-      <input type="number" id="create-car" v-model="year" placeholder="2001"> <br>
+      <input type="text" v-model="make" class="inputfield" placeholder="Make, Ex. Toyota">
 
-      <label for="create-car">Make: </label>
-      <input type="text" id="create-car" v-model="make" placeholder="Toyota"> <br>
+      <input type="text" v-model="model" class="inputfield" placeholder="Model, Ex. Camry"> <br>
 
-      <label for="create-car">Model: </label>
-      <input type="text" id="create-car" v-model="model" placeholder="Camry"> <br>
-
-      <label for="create-car">Colour: </label>
-      <input type="text" v-model="colour" placeholder="Grey"> <br>
+      <input type="text" v-model="colour" class="inputfield"  placeholder="Colour, Ex. Grey">
            
-      <img id="body-image" alt="[Image]" :src="`../assets/body-types/${bodytype}.png`"> <br> <br>
-      <label for="body-type">Body Style: </label>
-        <select id="select" v-model="bodytype">
-          <option value="default" disabled>Please select</option>
+      <!--<img id="body-image" alt="[Image]" :src="`../assets/body-types/${bodytype}.png`"> <br> <br>-->
+        <select style="width:47%;" class="dropdown" v-model="bodytype">
+          <option value="default" disabled>Body Style</option>
           <option value="compact">Compact</option>
           <option value="sedan">Sedan</option>
           <option value="coupe">Coupe/Convertible</option>
@@ -30,37 +23,32 @@
           <option value="van">Van</option>
         </select><br>
 
-      <label for="create-car">Mileage: </label>
-      <input type="number" id="create-car" v-model="mileage" placeholder="7558"> 
-        <select id="select" v-model="mileageunit">
-          <option value="default" selected disabled>Please select</option>
+      <input type="number" class="inputfield" v-model="mileage" placeholder="7558"> 
+        <select class="dropdown" style="width:47%;" v-model="mileageunit">
+          <option value="default" selected disabled>Unit</option>
           <option value="km">kilometres</option>
           <option value="mi">miles</option>
-        </select><br>
-        
-      <label for="create-car">Drivetrain: </label>
-        <select id="select" v-model="drivetrain">
-          <option value="default" selected disabled>Please select</option>
-          <option value="RWD">RWD</option>
-          <option value="FWD">FWD</option>
-          <option value="AWD">AWD</option>
-          <option value="4WD">4WD</option>
-        </select><br>
+      </select>
 
-      <label for="create-car">Transmission: </label>
-        <select id="select" v-model="transmission" placeholder="Automatic">
-          <option value="default" selected disabled>Please select</option>
-          <option value="automatic">Automatic</option>
-          <option value="manual">Manual</option>
-        </select><br>
+      <input type="text" v-model="engineinfo" class="inputfield" placeholder="3.2L 4cyl">  
 
-      <label for="create-car">Engine Information: </label>
-      <input type="text" v-model="engineinfo" placeholder="3.2L 4cyl"> <br>      
+      <select class="dropdown" style="width:47%;" v-model="transmission" placeholder="Automatic">
+        <option value="default" selected disabled>Transmission</option>
+        <option value="automatic">Automatic</option>
+        <option value="manual">Manual</option>
+      </select><br>
 
-      <label for="create-car">Asking Price: </label>
-      <input type="number" v-model="price" placeholder="$CAD"> <br>
+      <select class="dropdown" v-model="drivetrain">
+        <option value="default" selected disabled>Drivetrain</option>
+        <option value="RWD">RWD</option>
+        <option value="FWD">FWD</option>
+        <option value="AWD">AWD</option>
+        <option value="4WD">4WD</option>
+      </select><br>
 
-      <button v-on:click="createCar">Post!</button>
+      <input type="number" v-model="price" class="inputfield" placeholder="$CAD"> <br>
+
+      <button v-on:click="createCar" id="post" >Post!</button>
       <p class="error" v-if="error">{{ error }}</p>
       <router-link  id='backtohomebutton' hidden to='/'>Back to Home</router-link>
   </div>
@@ -120,17 +108,61 @@ name: 'AddCar',
       }
     },
     loadImage(){
-      this.bodytype = document.getElementById('select').value;
-      document.getElementById('body-image').src = "../assets/body-types/" + document.getElementById('select').value + ".png";
+      this.bodytype = document.getElementById('select-bodytype').value;
+      document.getElementById('body-image').src = "../assets/body-types/" + document.getElementById('select-bodytype').value + ".png";
     }    
   }
 };
 </script>
 
 <style scoped>
-img{
-  width: 8%;
-  height: 8%;
+.container {
+  max-width: 50%;
+  margin: 0 auto;
 }
 
+.inputfield{
+  width: 47%;
+  padding: 10px 15px;
+  margin-top: 8px;
+  margin-right: 5px;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  font-size:  15px;
+}
+
+.inputfield:focus{
+  border: 3px solid #555;
+}
+
+.dropdown{
+  width: 94.5%;
+  padding: 10px 15px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  font-size: 15px;
+}
+
+#post{
+  color: white;
+  text-align: center;
+  padding: 5px 5px;
+  font-size: 16px;
+  border: 2px solid #1a3752;
+  border-radius: 3px;
+  background-color: #2f6291;
+  margin-top: 8px;
+  width: 75px;
+}
+
+#post:hover{
+  background-color: #2f913e;
+  border: 2px solid #1a521f;
+  cursor: pointer;
+}
 </style>>
