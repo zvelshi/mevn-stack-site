@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = "api/cars/";
+const url = "/api/cars/";
 
 class CarService {    
     // Get Cars
@@ -21,25 +21,23 @@ class CarService {
             
         });
     }
+
+    // Get Car by Id
+    static getCarById(id){
+        axios.get(`${url}${id}`).then(response => {
+            return response.data[0];
+        });
+    }
     
     // Create Car
-    static insertCar(make, model){
-        return axios.post(url, {make, model});
+    static insertCar(year, make, model, bodytype, mileage, mileageunit, drivetrain, transmission, price, engineinfo, colour, description){
+        return axios.post(url, {year, make, model, bodytype, mileage, mileageunit, drivetrain, transmission, price, engineinfo, colour, description});
     }
 
     // Delete Car
     static deleteCar(id){
         return axios.delete(`${url}${id}`);
     }
-
-    // Get By Id ---- STILL DOESN'T WORK, SERVER SIDE WORKS NOW BUT CLIENT DOESN'T. ----
-    /*static findCarById(id){
-        return axios.get(`/api/cars/${id}`, {
-            params: {
-                id: this.car
-            }
-        }).then(response => {this.car = response.data})
-    }*/
 }
 
 export default CarService; 

@@ -8,14 +8,17 @@
         </select>
     </div>
     <hr>
-    <p class="error" v-if="error">{{ error }}</p>
-    <div class="cars-container">
-      <div class="car" v-for="(car, index) in cars" v-bind:item="car" v-bind:index="index" v-bind:key="car._id">
-        <p class="created-at">{{ `${car.createdAt.getDate()}/${car.createdAt.getMonth()+1}/${car.createdAt.getFullYear()}` }}</p>
-        <p class="car-post">{{ car.make }} {{ car.model }}</p>
-        <button class="delete" v-on:click="deleteCar(car._id)">Delete</button>
-        <router-link :to="{ name: 'view', params: { id: car._id } }">Go!</router-link>
-      </div>
+    <p class="error" v-if="error">{{ error }}</p>    
+    <div class="car" v-for="(car, index) in cars" v-bind:item="car" v-bind:index="index" v-bind:key="car._id">
+      <div class="car-post">
+        <img>
+        <router-link class="car-name" :to="{ name: 'view', params: { id: car._id } }">{{ car.year }} {{ car.make }} {{ car.model }}</router-link>
+        <p class="car-description">{{car.description}}</p>
+        <p class="car-price"><b>${{ car.price }}</b></p>
+        <p class="car-mileage"><b>Mileage </b>{{ car.mileage }}{{ car.mileageunit }}</p>
+        <p class="car-created-at"><b>Posted On </b>{{ `${car.createdAt.toDateString()}` }}</p>
+        <!--<button class="delete" v-on:click="deleteCar(car._id)">Delete</button> <br>-->
+      </div> 
     </div>
   </div>
 </template>
@@ -72,50 +75,42 @@ name: 'HomePage',
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-div.container {
-  max-width: 800px;
+.container {
+  max-width: 50%;
   margin: 0 auto;
 }
 
-p.error {
-  border: 1px solid #ff5b5f;
-  background-color: #ffc5c1;
-  padding: 10px;
-  margin-bottom: 15px;
-}
-
-div.car {
+.car-post{
   position: relative;
-  border: 1px solid #5bd658;
-  background-color: #bcffb8;
-  padding: 10px 10px 30px 10px;
+  border: 2px solid #d9d9d9;
+  border-radius: 3px;
+  background-color: #e6e6e6;
+  padding: 10px 10px 20px 10px;
   margin-bottom: 15px;
 }
 
-p.created-at {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px 15px 5px 15px;
-  background-color: darkgreen;
-  color: white;
-  font-size: 13px;
-}
-
-p.car-post{
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 0;
-}
-
-button.delete{
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 5px 16px;
+.car-name {
   text-align: center;
-  font-size: 13px;
-  margin: 4px 2px;
-  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  color: #2f6291;
+  font-size: 18px;
+}
+
+.car-name:hover{
+  color: #0e385e;
+}
+
+.car-mileage, .car-created-at {
+  font-size: 14px;
+  text-align: left;
+}
+
+.car-price {
+  float: right;
+}
+
+.car-description {
+  text-align: left;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
     <div id="view-car-container">
-        <h1>View Car: {{ $route.params.id }}</h1>
-        <h1>Viewing: {{ car.make }} {{ car.model }}</h1>
+        <h1>View Car: {{ this.$route.params.id }}</h1>
+        <!--<h1>Viewing: {{ car.year }} {{ car.make }} {{ car.model }}</h1>-->
     </div>
 </template>
 
 <script>
-//import CarService from '../CarService';
+import CarService from '../CarService'
 
 export default {
 name: 'ViewCar',
@@ -15,14 +15,17 @@ name: 'ViewCar',
       car: {}
     }
   },
-  async created() {
-    /*
+  async created() {  
+    let test = {};
+    console.log(test);
+
     try {
-      this.car = await CarService.findCarById(this.$route.params.id);
-    } catch (err) {
-      console.log(err);
+      test = await CarService.getCarById(this.$route.params.id)
+    } catch(err) {
+      console.log(err.msg)
     }
-    */
+
+    console.log(test);
   }
 };
 </script>

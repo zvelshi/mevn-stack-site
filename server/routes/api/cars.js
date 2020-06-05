@@ -19,8 +19,18 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const cars = await loadCarsCollection();
     await cars.insertOne({
+      year: req.body.year,
       make: req.body.make,
       model: req.body.model,
+      bodytype: req.body.bodytype,
+      mileage: req.body.mileage,
+      mileageunit: req.body.mileageunit,
+      drivetrain: req.body.drivetrain,
+      transmission: req.body.transmission,
+      price: req.body.price,
+      engineinfo: req.body.engineinfo,
+      colour: req.body.colour,
+      description: req.body.description,
       createdAt: new Date()
     });
     res.status(201).send();
