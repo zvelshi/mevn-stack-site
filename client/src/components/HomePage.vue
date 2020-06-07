@@ -303,6 +303,13 @@ name: 'HomePage',
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+p.error { 
+  border: 1px solid #ff5b5f; 
+  background-color: #ffc5c1; 
+  padding: 10px; 
+  margin-bottom: 15px; 
+}
+
 .container {
   max-width: 50%;
   margin: 0 auto;

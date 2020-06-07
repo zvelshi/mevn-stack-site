@@ -24,7 +24,7 @@
 
       <input type="number" class="inputfield" v-model="mileage" placeholder="Mileage, Ex. 63250"> 
         <select class="dropdown" style="width:47%;" id="select-mileageunit" v-on:change="selectMileageUnit()">
-          <option value="default" selected disabled>Unit</option>
+          <option value="default" selected disabled>Mileage Unit</option>
           <option value="km">kilometres</option>
           <option value="mi">miles</option>
       </select>
@@ -66,16 +66,15 @@ name: 'AddCar',
       make: '',
       model: '',
       bodytype: '',
-      mileage: Number,
+      mileage: '',
       mileageunit: '',
       drivetrain: '',
       transmission: '',
-      price: Number,
+      price: '',
       engineinfo: '',
       colour: '',
       description: '',
-      condition:'',
-      recognizedBrands: ["Abarth","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Bugatti","Cadillac","Chevrolet","Chrysler","Citroën","Dacia","Daewoo","Daihatsu","Dodge","Donkervoort","DS","Ferrari","Fiat","Fisker","Ford","Honda","Hummer","Hyundai","Infiniti","Iveco","Jaguar","Jeep","Kia","KTM","Lada","Lamborghini","Lancia","Land Rover","Landwind","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Morgan","Nissan","Opel","Peugeot","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo"]
+      condition:''
     }
   },
   async created() {
@@ -87,23 +86,45 @@ name: 'AddCar',
   },
   methods: {
     async createCar(){
-      let x = 0;
-      this.recognizedBrands.forEach(brand => {
-        if (this.make.toUpperCase() === brand.toUpperCase())
-          x++;
-        });
-      if (x !== 1) this.error = new Error(this.make + " is not valid brand.")
-      else {
+      let error = isValidForm(this.year, this.make, this.model, this.bodytype, this.mileage, this.mileageunit, this.drivetrain, this.transmission, this.price, this.engineinfo, this.colour);
+      if (error !== 'none'){
+        this.error = new Error(error + " is not valid. Please check field.");
+      } else {
         let a = "a ";
         let bodytype = "";
         if (this.transmission === "automatic") a = "an ";
         if (this.bodytype === "sports") bodytype = "sports car";
 
         this.description = "This is " + a + this.transmission + " " + this.make + " " + this.model + " from " + this.year + ". It is " + this.drivetrain + " " + bodytype + " with " + this.mileage + this.mileageunit + ".";
-        await CarService.insertCar(this.year, this.make, this.model, this.bodytype, this.mileage, this.mileageunit, this.drivetrain, this.transmission, this.price, this.engineinfo, this.colour, this.description, this.condition);
+        await CarService.insertCar(this.year, this.make, this.model, this.bodytype, this.mileage, this.mileageunit, this.drivetrain, this.transmission, this.price, this.engineinfo, this.colour, this.description);
         this.cars = await CarService.getCars();
         document.getElementById('backtohomebutton').hidden = false;
         this.error = "Your vehicle was added successfully."
+      }
+
+      function isValidForm(year, make, model, bodytype, mileage, mileageunit, drivetrain, transmission, price, engineinfo, colour){
+        let error = 'none';
+        const recognizedBrands = ["Abarth","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Bugatti","Cadillac","Chevrolet","Chrysler","Citroën","Dacia","Daewoo","Daihatsu","Dodge","Donkervoort","DS","Ferrari","Fiat","Fisker","Ford","Honda","Hummer","Hyundai","Infiniti","Iveco","Jaguar","Jeep","Kia","KTM","Lada","Lamborghini","Lancia","Land Rover","Landwind","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Morgan","Nissan","Opel","Peugeot","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo"];
+
+        if (parseInt(year) <= 0) error = 'The year';
+        else if (model === "") error = 'The model';
+        else if (colour === "") error = 'The colour';        
+        else if (bodytype === "" || bodytype === "default") error = 'The body style dropdown';
+        else if (parseInt(mileage) <= 0) error = 'The mileage';
+        else if (mileageunit === "" || mileageunit === "default") error = 'The mileage unit dropdown';
+        else if (engineinfo === "") error = 'The engine information box';
+        else if (transmission === "" || transmission === "default") error = 'The transmission dropdown';
+        else if (drivetrain === "" || drivetrain === "default") error = 'The drivetrain dropdown';
+        else if (parseInt(price) <= 0) error = 'Orice';
+      
+        let makeError = 0;
+        recognizedBrands.forEach(brand => {
+          if (make.toUpperCase() === brand.toUpperCase()) makeError++;
+        });
+        if (makeError === 0) error = "The make"
+        
+        console.log(error);
+        return error;
       }
     },
     loadImage(){
@@ -135,6 +156,13 @@ name: 'AddCar',
 </script>
 
 <style scoped>
+p.error { 
+  border: 1px solid #ff5b5f; 
+  background-color: #ffc5c1; 
+  padding: 10px; 
+  margin-bottom: 15px; 
+}
+
 .container {
   max-width: 50%;
   margin: 0 auto;

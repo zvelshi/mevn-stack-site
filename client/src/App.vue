@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <h1>AutoDeal</h1>
-    <div class="topnav">
-      <a href="/">Home</a>
-      <a href="/about">About Us</a>
-      <a style="float: right;" href="/add">Sell My Car</a>
+    <div class="centered">
+      <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <a style="float: right;" href="/add">Sell My Car</a>
+      </div>
     </div>
     <router-view></router-view>
   </div>
@@ -22,10 +24,21 @@
   text-align: center;
   color: #2c3e50;
 }
+
+.centered{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .topnav {
   background-color: #333;
   overflow: hidden;
-  width: 100%;
+  width: 75%;
+  border-radius: 6px;;
 }
 
 .topnav a {
@@ -34,7 +47,8 @@
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .topnav a:hover {
