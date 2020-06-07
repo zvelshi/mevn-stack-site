@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>AutoDeal!</h1>
+    <h1>AutoDeal</h1>
     <div class="topnav">
       <a href="/">Home</a>
       <a href="/about">About Us</a>

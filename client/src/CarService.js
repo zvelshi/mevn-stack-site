@@ -24,9 +24,18 @@ class CarService {
 
     // Get Car by Id
     static getCarById(id){
-        axios.get(`${url}${id}`).then(response => {
-            return response.data[0];
-        });
+        return new Promise ((resolve, reject) => {
+            axios.get(`${url}${id}`).then((res) => {
+                const data = res.data[0];
+                resolve(
+                    data,
+                )})
+                .catch((err)=> {
+                    reject(err);
+                })
+        })
+        
+        
     }
     
     // Create Car

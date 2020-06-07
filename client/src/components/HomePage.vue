@@ -2,6 +2,21 @@
   <div class="container">
     <h1>Latest Car Listings</h1>
 
+    <div id="sort-by">
+      <label for="select-sort">Sort Listings by: </label>
+      <select id="select-sort" style="width:20%; margin-right:5px;" v-on:change="sortBy('as')">
+        <option class="option" value="pd" selected>Post Date</option>
+        <option class="option" value="make">Brand</option>
+        <option class="option" value="price">Price</option>
+        <option class="option" value="mileage">Mileage</option>
+        <option class="option" value="year">Year</option>
+      </select>
+      <button class="sort-button" v-on:click="sortBy('as')">Ascending</button>
+      <button class="sort-button" v-on:click="sortBy('des')">Descending</button>
+    </div>
+
+    <hr>
+
     <div id="filter-by">
       <label for="filter-by">Filter Listings by: </label>
       <button class="filter-button" v-on:click="filterChange('brand')">Brand</button>
@@ -68,7 +83,6 @@
         <p class="car-price"><b>${{ car.price }}</b></p>
         <p class="car-mileage"><b>Mileage </b>{{ car.mileage }}{{ car.mileageunit }}</p>
         <p class="car-created-at"><b>Posted On </b>{{ `${car.createdAt.toDateString()}` }}</p>
-        <!--<button class="delete" v-on:click="deleteCar(car._id)">Delete</button> <br>-->
       </div> 
     </div>
   </div>
@@ -87,7 +101,8 @@ name: 'HomePage',
       model: '',
       brands: [],
       bodytypes: [],
-      drivetrains: []
+      drivetrains: [],
+      sortmodifier: 'as'
     }
   },
   async created() {
@@ -131,10 +146,6 @@ name: 'HomePage',
     }  
   },
   methods: {
-    async deleteCar(id) {
-      await CarService.deleteCar(id);
-      this.cars = await CarService.getCars();
-    },
     filterChange(filter){
       let brand = document.getElementById('filter-brand');
       let year = document.getElementById('filter-year');
@@ -262,6 +273,30 @@ name: 'HomePage',
         this.cars = cars.filter(car => car.drivetrain === drivetrain);
       }
     },
+    async sortBy(mod){
+      this.sortmodifier = mod;
+      const select = document.getElementById("select-sort");
+      const option = select.options[select.selectedIndex].value;
+      const pd_as_cars = await CarService.getCars();
+      if (this.sortmodifier === "as") {
+        if (option === "pd") this.cars = pd_as_cars;
+        else if (option === "make") this.cars.sort((a, b) => (a.make.toUpperCase() > b.make.toUpperCase()) ? 1 : -1);
+        else if (option === "price") this.cars.sort((a, b) => (parseInt(a.price) > parseInt(b.price)) ? 1 : -1);
+        else if (option === "mileage") this.cars.sort((a, b) => (toKM(a) > toKM(b)) ? 1 : -1);
+        else if (option === "year") this.cars.sort((a, b) => (parseInt(a.year) > parseInt(b.year)) ? 1 : -1);
+      } else if (this.sortmodifier === "des") {
+        if (option === "pd") this.cars.reverse()
+        else if (option === "make") this.cars.sort((a, b) => (a.make.toUpperCase() > b.make.toUpperCase()) ? -1 : 1);
+        else if (option === "price") this.cars.sort((a, b) => (parseInt(a.price) > parseInt(b.price)) ? -1 : 1);
+        else if (option === "mileage") this.cars.sort((a, b) => (toKM(a) > toKM(b)) ? -1 : 1);
+        else if (option === "year") this.cars.sort((a, b) => (parseInt(a.year) > parseInt(b.year)) ? -1 : 1);
+      }
+      function toKM(a){
+        const MULTIPLIER = 1.609;
+        if(a.mileageunit !== "km") return parseInt(a.mileage)*MULTIPLIER;
+        else return parseInt(a.mileage);
+      }
+    }
   }
 };
 </script>
@@ -301,13 +336,14 @@ name: 'HomePage',
 
 .car-price{
   float: right;
+  color: green;
 }
 
 .car-description {
   text-align: left;
 }
 
-.filter-button{
+.filter-button, .sort-button{
   color: black;
   text-align: center;
   padding: 5px 5px;
@@ -318,7 +354,7 @@ name: 'HomePage',
   background-color: #e6e6e6;
 }
 
-.filter-button:hover{
+.filter-button:hover, .sort-button:hover{
   background-color: #2f6291;
   border: 2px solid #1a3752;
   color: white;
@@ -359,7 +395,7 @@ name: 'HomePage',
   border: 3px solid #555;
 }
 
-#select-brand, #select-bodytype, #select-drivetrain, #mileage-unit {
+#select-brand, #select-bodytype, #select-drivetrain, #mileage-unit, #select-sort {
   width: 94%;
   padding: 10px 15px;
   margin-top: 8px;
