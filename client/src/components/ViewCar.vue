@@ -25,12 +25,7 @@
         
         <div class="post-specs">
           <h3>All Specifications</h3>
-          <div class="left">
-            <p><b>Mileage<br>Year<br>Brand<br>Body Style<br>Body Colour<br>Engine<br>Drivetrain<br>Transmission<br></b></p>
-          </div>
-          <div class="right">
-             <p>{{ car.mileage }} {{ car.mileageunit }} <br> {{ car.year }} <br> {{ car.make }} <br> {{ car.bodytype }} <br> {{ car.colour }} <br> {{ car.engineinfo }} <br> {{ car.drivetrain }} <br> {{ car.transmission }} </p>
-          </div>
+          <p><b>Mileage</b> {{ car.mileage }} {{ car.mileageunit }} <br> <b>Year</b> {{ car.year }}<br> <b>Brand</b> {{ car.make }} <br> <b>Body Style</b> {{ car.bodytype }} <br> <b>Body Colour</b> {{ car.colour }} <br> <b>Engine</b> {{ car.engineinfo }} <br> <b>Drivetrain</b> {{ car.drivetrain }} <br> <b>Transmission</b> {{ car.transmission }}</p>
         </div>
 
         <div class="post-alsoviewed">
@@ -91,7 +86,7 @@ name: 'ViewCar',
 
 <style scoped>
 .container {
-  max-width: 50%;
+  max-width: 55%;
 	margin: 0 auto;
 }
 
@@ -169,7 +164,7 @@ name: 'ViewCar',
 }
 
 .alsoviewed-listing{
-  width: 31%;
+  width: 30.5%;
   padding: 10px 0px 10px 0px;
   margin: 10px;
   border: 2px solid #2f6291;
@@ -205,20 +200,7 @@ h3 {
   line-height: 175%;
 }
 
-.post-specs {
-  margin-top: 20px;
-  padding: 10px;
-}
-
-.left {
-  width: 50%;
-  float: left;
+.post-specs p {
   line-height: 175%;
-}
-
-.right {
-  margin-left: 50%;
-  line-height: 175%;
-  margin-top: 2.75%;
 }
 </style>
