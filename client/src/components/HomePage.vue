@@ -303,130 +303,114 @@ name: 'HomePage',
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-p.error { 
-  border: 1px solid #ff5b5f; 
-  background-color: #ffc5c1; 
-  padding: 10px; 
-  margin-bottom: 15px; 
+p.error {
+	border: 1px solid #ff5b5f;
+	background-color: #ffc5c1;
+	padding: 10px;
+	margin-bottom: 15px;
 }
-
 .container {
-  max-width: 50%;
-  margin: 0 auto;
+	max-width: 50%;
+	margin: 0 auto;
 }
-
 .car-post{
-  position: relative;
-  border: 2px solid #d9d9d9;
-  border-radius: 3px;
-  background-color: #e6e6e6;
-  padding: 10px 10px 20px 10px;
-  margin-bottom: 15px;
+	position: relative;
+	border: 2px solid #d9d9d9;
+	border-radius: 3px;
+	background-color: #e6e6e6;
+	padding: 10px 10px 20px 10px;
+	margin-bottom: 15px;
 }
-
 .car-name {
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  color: #2f6291;
-  font-size: 18px;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	color: #2f6291;
+	font-size: 18px;
 }
-
 .car-name:hover{
-  color: #0e385e;
+	color: #0e385e;
 }
-
 .car-mileage, .car-created-at {
-  font-size: 14px;
-  text-align: left;
+	font-size: 14px;
+	text-align: left;
 }
-
 .car-price{
-  float: right;
-  color: green;
+	float: right;
+	color: green;
 }
-
 .car-description {
-  text-align: left;
+	text-align: left;
 }
-
 .filter-button, .sort-button{
-  color: black;
-  text-align: center;
-  padding: 5px 5px;
-  margin-right: 3px;
-  font-size: 17px;
-  border: 2px solid #d9d9d9;
-  border-radius: 3px;
-  background-color: #e6e6e6;
+	color: black;
+	text-align: center;
+	padding: 5px 5px;
+	margin-right: 3px;
+	font-size: 17px;
+	border: 2px solid #d9d9d9;
+	border-radius: 3px;
+	background-color: #e6e6e6;
 }
-
 .filter-button:hover, .sort-button:hover{
-  background-color: #2f6291;
-  border: 2px solid #1a3752;
-  color: white;
-  cursor: pointer;
+	background-color: #2f6291;
+	border: 2px solid #1a3752;
+	color: white;
+	cursor: pointer;
 }
-
 .reset-filter{
-  color: white;
-  text-align: center;
-  padding: 5px 5px;
-  font-size: 16px;
-  border: 2px solid #631616;
-  border-radius: 3px;
-  background-color: #9c2525;
+	color: white;
+	text-align: center;
+	padding: 5px 5px;
+	font-size: 16px;
+	border: 2px solid #631616;
+	border-radius: 3px;
+	background-color: #9c2525;
 }
-
 .reset-filter:hover{
-  background-color: #2f6291;
-  border: 2px solid #1a3752;
-  color: white;
-  cursor: pointer;
+	background-color: #2f6291;
+	border: 2px solid #1a3752;
+	color: white;
+	cursor: pointer;
 }
-
 .inputfield{
-  width: 47%;
-  padding: 10px 15px;
-  margin-top: 8px;
-  margin-right: 5px;
-  box-sizing: border-box;
-  border: 3px solid #ccc;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  outline: none;
-  font-size:  15px;
+	width: 47%;
+	padding: 10px 15px;
+	margin-top: 8px;
+	margin-right: 5px;
+	box-sizing: border-box;
+	border: 3px solid #ccc;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+	font-size: 15px;
 }
-
 .inputfield:focus{
-  border: 3px solid #555;
+	border: 3px solid #555;
 }
-
 #select-brand, #select-bodytype, #select-drivetrain, #mileage-unit, #select-sort {
-  width: 94%;
-  padding: 10px 15px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 4px;
-  background-color: #f1f1f1;
-  font-size: 15px;
+	width: 94%;
+	padding: 10px 15px;
+	margin-top: 8px;
+	border: none;
+	border-radius: 4px;
+	background-color: #f1f1f1;
+	font-size: 15px;
 }
-
 #search{
-  color: white;
-  text-align: center;
-  padding: 5px 5px;
-  font-size: 16px;
-  border: 2px solid #1a3752;
-  border-radius: 3px;
-  background-color: #2f6291;
-  margin-top: 8px;
-  width: 75px;
+	color: white;
+	text-align: center;
+	padding: 5px 5px;
+	font-size: 16px;
+	border: 2px solid #1a3752;
+	border-radius: 3px;
+	background-color: #2f6291;
+	margin-top: 8px;
+	width: 75px;
 }
-
 #search:hover{
-  background-color: #2f913e;
-  border: 2px solid #1a521f;
-  cursor: pointer;
+	background-color: #2f913e;
+	border: 2px solid #1a521f;
+	cursor: pointer;
 }
 </style>
