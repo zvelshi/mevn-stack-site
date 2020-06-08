@@ -363,13 +363,13 @@ p.error {
 	text-align: center;
 	padding: 5px 5px;
 	font-size: 16px;
-	border: 2px solid #631616;
+	border: 2px solid #1a3752;
 	border-radius: 3px;
-	background-color: #9c2525;
+	background-color: #2f6291;
 }
 .reset-filter:hover{
-	background-color: #2f6291;
-	border: 2px solid #1a3752;
+	background-color: #9c2525;
+	border: 2px solid #631616;
 	color: white;
 	cursor: pointer;
 }

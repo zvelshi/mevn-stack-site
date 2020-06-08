@@ -25,27 +25,26 @@
         
         <div class="post-specs">
           <h3>All Specifications</h3>
-          <div class="specs left">
+          <div class="left">
             <p><b>Mileage<br>Year<br>Brand<br>Body Style<br>Body Colour<br>Engine<br>Drivetrain<br>Transmission<br></b></p>
           </div>
-          <div class="specs right">
+          <div class="right">
              <p>{{ car.mileage }} {{ car.mileageunit }} <br> {{ car.year }} <br> {{ car.make }} <br> {{ car.bodytype }} <br> {{ car.colour }} <br> {{ car.engineinfo }} <br> {{ car.drivetrain }} <br> {{ car.transmission }} </p>
           </div>
         </div>
 
         <div class="post-alsoviewed">
           <h3>People Also Viewed</h3>
-          <div class="car" v-for="(car, index) in cars" v-bind:item="car" v-bind:index="index" v-bind:key="car._id">
-            <div class="viewed-post">
-              <router-link class="car-name" :to="{ name: 'view', params: { id: car._id } }">{{ car.year }} {{ car.make }} {{ car.model }}</router-link>
-              <p class="car-price"><b>${{ car.price }}</b></p>
-              <p class="car-mileage"><b>Mileage </b>{{ car.mileage }}{{ car.mileageunit }}</p>
-              <p class="car-created-at"><b>Posted On </b>{{ `${car.createdAt.toDateString()}` }}</p>
-            </div> 
+          <div class="alsoviewed-listing" v-for="(car, index) in cars" v-bind:item="car" v-bind:index="index" v-bind:key="car._id">
+            <router-link class="car-name" :to="{ name: 'view', params: { id: car._id } }">{{ car.year }} {{ car.make }} {{ car.model }}</router-link>
+            <p class="car-price"><b>${{ car.price }}</b></p>
+            <p class="car-mileage"><b>Mileage </b>{{ car.mileage }}{{ car.mileageunit }}</p>
+            <p class="car-created-at"><b>Posted On </b>{{ `${car.createdAt.toDateString()}` }}</p> 
           </div>
         </div>
+        <br>
         <button id="button-admin" style="float:right;" v-on:click="adminSettings()">Admin Settings</button>
-        <button id="button-delete" v-on:click="deleteCar(car._id)" style="float:right;" hidden>Delete Post</button>
+        <button id="button-delete" v-on:click="deleteCar(car._id)" style="float:right;" hidden>Delete Listing</button>
     </div>
 </template>
 
@@ -76,6 +75,7 @@ name: 'ViewCar',
     this.cars = cars.filter(car => car.price < maxPrice && car.price > minPrice && car._id !== this.car._id); //show cars in the same price range +-5000
     if(this.cars.length < 2) this.cars = cars.filter(car => car.price < maxPrice+5000 && car.price > minPrice-5000 && car._id !== this.car._id); //if no cars in +-5000, show in +-10000
     if(this.cars.length < 2) this.cars = cars.filter(car => car.bodytype == this.car.bodytype && car._id !== this.car._id); //if no cars in +-10000, show same bodytype
+    this.cars.slice(0,3);
   },
   methods: {
     async deleteCar(id) {
@@ -91,7 +91,7 @@ name: 'ViewCar',
 
 <style scoped>
 .container {
-  max-width: 66%;
+  max-width: 50%;
 	margin: 0 auto;
 }
 
@@ -119,14 +119,14 @@ name: 'ViewCar',
 	text-align: center;
 	padding: 5px 5px;
 	font-size: 16px;
-	border: 2px solid #631616;
+	border: 2px solid #1a3752;
 	border-radius: 3px;
-	background-color: #9c2525;
+	background-color: #2f6291;
 }
 
 .home a:hover {
-  background-color: #2f6291;
-	border: 2px solid #1a3752;
+  background-color: #9c2525;
+	border: 2px solid #631616;
 	color: white;
 	cursor: pointer;
 }
@@ -145,19 +145,48 @@ name: 'ViewCar',
 	font-size: 18px;
 }
 
-.post-title:after, .post-highlights:after{
+.post-title:after, .post-highlights:after, .post-alsoviewed:after{
   content: "";
   display: table;
   clear: both;
 }
-.post-highlights, .post-description, .post-specs, .post-alsoviewed{
+
+.post-highlights, .post-description, .post-specs{
   position: relative;
 	border-radius: 3px;
 	background-color: #e6e6e6;
 	padding: 5px;
   margin-top: 20px;
+  line-height: 50%;;
+}
+
+.post-alsoviewed {
+	border-radius: 3px;
+	background-color: #e6e6e6;
+	padding: 5px;
   margin-top: 20px;
   line-height: 50%;;
+}
+
+.alsoviewed-listing{
+  width: 31%;
+  padding: 10px 0px 10px 0px;
+  margin: 10px;
+  border: 2px solid #2f6291;
+  border-radius: 3px;
+  box-sizing: border-box;
+  float: left;
+  background-color: white;
+}
+
+.car-name{
+  text-decoration: none;
+	font-weight: bold;
+	color: #2f6291;
+}
+
+.car-name:hover{
+	color: #0e385e;
 }
 
 h3 {
@@ -176,4 +205,20 @@ h3 {
   line-height: 175%;
 }
 
+.post-specs {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.left {
+  width: 50%;
+  float: left;
+  line-height: 175%;
+}
+
+.right {
+  margin-left: 50%;
+  line-height: 175%;
+  margin-top: 2.75%;
+}
 </style>
