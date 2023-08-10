@@ -1,25 +1,19 @@
-# Used Car Website
-Developed by Zac Velshi for the ICS4U Culminating Task
+## 🚘 Autodeal Website
+Developed by Zac Velshi for the ICS4U Culminating Task, this MEVN-Stack based website allows its users to buy and sell used cars.  
 
-## Project setup
+## 🔨 Key Technologies Used
+* Database: MongoDB
+* Middleware: NodeJS, Express.js
+* Front End: Vue.js
+
+## 🏃‍♂️ To Run
 ```
+# Install dependencies
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
+# Compiles and hot-reloads for development
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
+# Compiles and minifies for production
+run build
+# Lints and fixes files
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
